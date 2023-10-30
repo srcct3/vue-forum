@@ -1,21 +1,18 @@
-<script>
+<script setup>
+import { ref } from "vue";
 import sourceData from "../data.json";
 
-export default {
-    data: () => ({
-        threads: sourceData.threads,
-        posts: sourceData.posts,
-        users: sourceData.users,
-    }),
-    methods: {
-        postById(postId) {
-            return this.posts.find(p => p.id === postId)
-        },
-        userById(userId) {
-            return this.users.find(u => u.id === userId)
-        }
-    }
-};
+const threads = ref(sourceData.threads)
+const posts = ref(sourceData.posts)
+const users = ref(sourceData.users)
+
+function postById(postId) {
+    return posts.value.find(p => p.id === postId)
+}
+
+function userById(userId) {
+    return users.value.find(u => u.id === userId)
+}
 </script>
 
 <template>
