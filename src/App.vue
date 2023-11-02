@@ -1,14 +1,16 @@
 <script>
-import PageHome from "./components/PageHome.vue";
+// import PageHome from "./components/PageHome.vue";
+import "./assets/style.css"
 
-export default {
-  components: {
-    PageHome,
-  },
-};
+// export default {
+//   components: {
+//     PageHome,
+//   },
+// };
 </script>
 
 <template>
-  <p>App</p>
-  <page-home />
+  <div class="container">
+    <router-view />
+  </div>
 </template>

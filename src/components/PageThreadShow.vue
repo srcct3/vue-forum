@@ -1,15 +1,68 @@
 <script setup>
 import { ref } from "vue";
-import sourceData from "../data.json"
-import ThreadList from "./ThreadList.vue"
+import sourceData from "../data.json";
+
+const props = defineProps({
+    id: {
+        required: true,
+        type: String
+    }
+})
 
 const threads = ref(sourceData.threads)
+const posts = ref(sourceData.posts)
+const users = ref(sourceData.users)
 
+const thread = ref(threadById(props.id))
+
+// watch(
+//     // () => route.params.id,
+//     thread.value = threadById(route.params.id)
+// )
+
+function threadById(threadId) {
+    return threads.value.find(t => t.id === threadId)
+}
+
+function postById(postId) {
+    return posts.value.find(p => p.id === postId)
+}
+
+function userById(userId) {
+    return users.value.find(u => u.id === userId)
+}
 </script>
 
 <template>
-    <h1>Welcom to the thread</h1>
-    <ThreadList :threads="threads" />
+    <div class="col-large push-top">
+        <h2>{{ thread.title }}</h2>
+        <div class="post-list">
+            <div class="post" v-for="postId in thread.posts">
+
+                <div class="user-info">
+                    <a href="#" class="user-name">{{ userById(postById(postId).userId).name }}</a>
+
+                    <a href="#">
+                        <img class="avatar-large" :src="userById(postById(postId).userId).avatar" alt="avatar">
+                    </a>
+
+                    <p class="desktop-only text-small">107 posts</p>
+                </div>
+
+                <div class="post-content">
+                    <div>
+                        <p>{{ postById(postId).text }}</p>
+                    </div>
+                </div>
+
+                <div class="post-date text-faded">
+                    {{ postById(postId).publishedAt }}
+                </div>
+
+            </div>
+
+        </div>
+    </div>
 </template>
 
 <style scoped>
